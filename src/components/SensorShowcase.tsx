@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 type Sensor = {
   id: string;
@@ -6,7 +6,7 @@ type Sensor = {
   role: string;
   status: "PROTOTYPE" | "PLANNED";
   desc: string;
-  icon: (active: boolean) => JSX.Element;
+  icon: (active: boolean) => ReactNode;
 };
 
 const SENSORS: Sensor[] = [
