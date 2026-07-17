@@ -199,7 +199,7 @@ function MeasurementRings({ p }: { p: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="pointer-events-none absolute z-15 flex h-full w-full items-end justify-center pb-[10vh]"
+      className="pointer-events-none absolute z-20 flex h-full w-full items-end justify-center pb-[10vh]"
     >
       <motion.div style={{ scale }} className="relative h-64 w-64">
         {[0, 1, 2].map((i) => (
