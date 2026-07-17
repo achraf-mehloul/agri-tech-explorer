@@ -5,6 +5,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppGallery } from "@/components/AppGallery";
 import { SensorShowcase } from "@/components/SensorShowcase";
 import { Ecosystem } from "@/components/Ecosystem";
+import { ProductStory } from "@/components/ProductStory";
 
 const AgriPen3D = lazy(() =>
   import("@/components/AgriPen3D").then((m) => ({ default: m.AgriPen3D })),
@@ -25,6 +26,7 @@ function Home() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Nav />
       <Hero />
+      <ProductStory />
       <Marquee />
       <Narrative />
       <SensorsSection />
