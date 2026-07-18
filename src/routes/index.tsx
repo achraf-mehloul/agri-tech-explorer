@@ -145,64 +145,159 @@ function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center px-4 pt-24 md:px-6"
+      className="relative min-h-[100svh] px-4 pt-28 pb-16 md:px-6 md:pt-32 md:pb-20 overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
-      <div className="absolute inset-0 grid-lines pointer-events-none opacity-60" />
-      <div className="absolute inset-x-0 top-24 z-10 mx-auto max-w-3xl text-center px-4 md:px-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1 backdrop-blur">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-          <span className="mono-label text-muted-foreground">
-            Prototype · v0.9 · Engineering preview
-          </span>
-        </div>
-        <h1 className="mt-6 text-balance text-4xl leading-[0.98] sm:text-5xl md:text-7xl">
-          Understand your soil.
-          <br />
-          <span className="italic text-primary/80">Make better decisions.</span>
-        </h1>
-        <p className="mx-auto mt-5 max-w-xl text-balance text-sm text-muted-foreground sm:text-base md:text-lg">
-          AgriPen connects sensing, data, and artificial intelligence to support
-          smarter agricultural decisions — from the soil to the screen.
-        </p>
-      </div>
+      <div className="absolute inset-0 grid-lines pointer-events-none opacity-50" />
 
-      <div className="relative z-0 h-[60svh] md:h-[75svh] w-full max-w-5xl">
-        <Suspense
-          fallback={
-            <div className="flex h-full items-center justify-center">
-              <div className="mono-label text-muted-foreground animate-pulse">
-                Preparing device
+      {/* Ambient radial glow behind the stage */}
+      <div
+        className="pointer-events-none absolute right-[-10%] top-[10%] h-[80vh] w-[80vh] rounded-full blur-3xl opacity-40 dark:opacity-25"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, oklch(0.68 0.17 140 / 0.35), transparent 65%)",
+        }}
+      />
+
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
+        {/* ------------- LEFT — content ------------- */}
+        <div className="flex flex-col gap-8">
+          <div className="inline-flex items-center gap-2 self-start rounded-full border border-border/70 bg-background/60 px-3 py-1 backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+            <span className="mono-label text-accent">
+              Precision sensing · v0.9 · engineering preview
+            </span>
+          </div>
+
+          <h1 className="text-balance text-5xl leading-[0.95] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            The new
+            <br />
+            <span className="italic text-primary/85">standard</span> in
+            <br />
+            soil intelligence.
+          </h1>
+
+          <p className="max-w-xl text-base text-muted-foreground md:text-lg leading-relaxed">
+            AgriPen is a machined, field-ready instrument. A multi-probe sensor
+            head, an ESP32 core and an on-device AI pipeline — from the soil to
+            the screen, in seconds.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="#device"
+              className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+            >
+              Explore the instrument
+            </a>
+            <a
+              href="#hardware"
+              className="rounded-full border border-border bg-background/70 px-6 py-3 text-sm font-medium backdrop-blur transition hover:bg-background"
+            >
+              Technical specs
+            </a>
+          </div>
+
+          <div className="mt-2 grid max-w-lg grid-cols-3 gap-6 border-t border-border/70 pt-6">
+            {[
+              ["Response", "0.4 s"],
+              ["Precision", "±0.12 hPa"],
+              ["Depth", "200 mm"],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <p className="mono-label text-muted-foreground">{k}</p>
+                <p className="mt-1 font-display text-2xl md:text-3xl text-foreground">
+                  {v}
+                </p>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ------------- RIGHT — 3D stage ------------- */}
+        <div className="relative h-[70svh] min-h-[520px] w-full lg:h-[80svh]">
+          {/* stage floor light */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 90% at 50% 100%, oklch(0.32 0.07 145 / 0.18), transparent 70%)",
+            }}
+          />
+
+          <Suspense
+            fallback={
+              <div className="flex h-full items-center justify-center">
+                <div className="mono-label text-muted-foreground animate-pulse">
+                  Preparing device
+                </div>
+              </div>
+            }
+          >
+            <AgriPen3D />
+          </Suspense>
+
+          {/* Floating HUD — moisture */}
+          <div className="pointer-events-none absolute right-0 top-[14%] hidden md:flex items-center gap-3">
+            <div className="h-px w-10 bg-primary/30 lg:w-14" />
+            <div className="rounded-xl border border-border/60 bg-background/70 p-3.5 pr-5 backdrop-blur-xl shadow-[var(--shadow-elevated)]">
+              <p className="mono-label text-muted-foreground">Moisture · VWC</p>
+              <p className="mt-0.5 font-display text-xl text-foreground">
+                42.8<span className="text-muted-foreground text-sm">%</span>
+              </p>
             </div>
-          }
-        >
-          <AgriPen3D />
-        </Suspense>
+          </div>
+
+          {/* Floating HUD — nitrogen */}
+          <div className="pointer-events-none absolute right-0 top-[38%] hidden md:flex items-center gap-3">
+            <div className="h-px w-14 bg-primary/30 lg:w-20" />
+            <div className="rounded-xl border border-border/60 bg-background/70 p-3.5 pr-5 backdrop-blur-xl shadow-[var(--shadow-elevated)]">
+              <p className="mono-label text-muted-foreground">Temperature</p>
+              <p className="mt-0.5 font-display text-xl text-foreground">
+                24.6<span className="text-muted-foreground text-sm">°C</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Floating HUD — live spectrum */}
+          <div className="pointer-events-none absolute left-0 bottom-[8%] hidden md:block">
+            <div className="rounded-xl border border-border/60 bg-background/70 p-4 backdrop-blur-xl shadow-[var(--shadow-elevated)]">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                <p className="mono-label text-foreground">System live</p>
+              </div>
+              <div className="flex h-10 w-44 items-end gap-1">
+                {[50, 75, 33, 86, 66, 42, 58, 70, 48, 90, 62, 38].map((h, i) => (
+                  <div
+                    key={i}
+                    className={`w-1.5 rounded-sm ${
+                      i < 7 ? "bg-accent" : "bg-border-strong/60"
+                    }`}
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+              <p className="mono-label mt-2 text-muted-foreground">
+                Multi-probe · 12 ch
+              </p>
+            </div>
+          </div>
+
+          {/* Dimension callout — right side */}
+          <div className="pointer-events-none absolute right-2 bottom-[4%] hidden lg:flex flex-col items-end gap-1">
+            <span className="mono-label text-muted-foreground">Ø 32 mm</span>
+            <span className="mono-label text-muted-foreground">H 200 mm</span>
+          </div>
+        </div>
       </div>
 
-      <div className="absolute bottom-6 left-0 right-0 z-10 flex flex-col items-center gap-3 px-4">
-        <div className="flex flex-wrap justify-center gap-2">
-          <a
-            href="#device"
-            className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-          >
-            Explore the technology
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full border border-border bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur transition hover:bg-background"
-          >
-            Request a demo
-          </a>
-        </div>
-        <p className="mono-label text-muted-foreground text-center">
-          Drag to rotate · pinch to zoom · click hotspots
-        </p>
-      </div>
+      <p className="mono-label text-muted-foreground absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
+        Drag to rotate · pinch to zoom · click hotspots
+      </p>
     </section>
   );
 }
+
 
 /* ------------------------------- MARQUEE ------------------------------- */
 function Marquee() {
