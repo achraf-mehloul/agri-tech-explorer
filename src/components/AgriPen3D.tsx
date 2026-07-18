@@ -280,10 +280,11 @@ export function AgriPen3D() {
         <Canvas
           shadows
           dpr={[1, 2]}
+          gl={{ alpha: true, antialias: true }}
           camera={{ position: [0.6, 0.2, 8.5], fov: 26 }}
           onPointerMissed={() => setSelected(null)}
+          style={{ background: "transparent" }}
         >
-          <color attach="background" args={["#00000000"]} />
           <ambientLight intensity={0.4} />
           <directionalLight
             position={[4, 6, 4]}
