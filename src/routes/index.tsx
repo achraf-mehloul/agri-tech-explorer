@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState } from "react";
 import logoAsset from "@/assets/agripen-logo.png.asset.json";
+import prototypeBoard from "@/assets/prototype-board.png.asset.json";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppGallery } from "@/components/AppGallery";
 import { SensorShowcase } from "@/components/SensorShowcase";
@@ -552,6 +553,23 @@ function CurrentVsFuture() {
               {data.items.length} items
             </span>
           </div>
+
+          {mode === "current" && (
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-background">
+              <img
+                src={prototypeBoard.url}
+                alt="AgriPen prototype breadboard: ESP32, DHT11, BMP180, YL-69, 18650 Li-ion battery, resistors and soldering iron on a dark surface"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+              <div className="border-t border-border px-4 py-3">
+                <p className="mono-label text-muted-foreground">
+                  Real prototype board · 2026 · ESP32 + DHT11 + BMP180 + YL-69 + 18650 Li-ion
+                </p>
+              </div>
+            </div>
+          )}
+
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {data.items.map((i) => (
               <li key={i} className="flex items-start gap-3 rounded-xl border border-border bg-background px-4 py-3">
