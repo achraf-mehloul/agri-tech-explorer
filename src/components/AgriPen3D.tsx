@@ -52,10 +52,12 @@ const HOTSPOTS: Hotspot[] = [
 function PenModel({
   exploded,
   selected,
+  xray,
   onSelect,
 }: {
   exploded: boolean;
   selected: string | null;
+  xray: boolean;
   onSelect: (id: string | null) => void;
 }) {
   const group = useRef<THREE.Group>(null!);
@@ -67,7 +69,7 @@ function PenModel({
     }
   });
 
-  // Material palette
+  // Material palette — recomputed when xray toggles for transparency
   const bodyMat = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
@@ -76,8 +78,11 @@ function PenModel({
         metalness: 0.15,
         clearcoat: 0.6,
         clearcoatRoughness: 0.25,
+        transparent: xray,
+        opacity: xray ? 0.18 : 1,
+        depthWrite: !xray,
       }),
-    [],
+    [xray],
   );
   const capMat = useMemo(
     () =>
@@ -86,8 +91,11 @@ function PenModel({
         roughness: 0.4,
         metalness: 0.2,
         clearcoat: 0.5,
+        transparent: xray,
+        opacity: xray ? 0.25 : 1,
+        depthWrite: !xray,
       }),
-    [],
+    [xray],
   );
   const metalMat = useMemo(
     () =>
