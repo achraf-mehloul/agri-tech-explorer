@@ -303,7 +303,28 @@ export function AgriPen3D() {
           <directionalLight position={[-4, 2, -2]} intensity={0.4} color="#a8c49a" />
           <Suspense fallback={null}>
             <Float speed={0.8} rotationIntensity={0} floatIntensity={0.35}>
-              <PenModel exploded={exploded} selected={selected} onSelect={setSelected} />
+              <PenModel exploded={exploded} selected={selected} xray={xray} onSelect={setSelected} />
+              {xray && (
+                <>
+                  {/* Simulated PCB inside upper body */}
+                  <mesh position={[0, 0.7, 0]}>
+                    <boxGeometry args={[0.42, 0.9, 0.05]} />
+                    <meshStandardMaterial color="#0d5b3a" roughness={0.6} metalness={0.2} emissive="#0d5b3a" emissiveIntensity={0.15} />
+                  </mesh>
+                  {/* Battery cell inside lower body */}
+                  <mesh position={[0, -0.75, 0]}>
+                    <cylinderGeometry args={[0.18, 0.18, 1.15, 24]} />
+                    <meshStandardMaterial color="#7c4dff" roughness={0.5} metalness={0.6} emissive="#5a37c9" emissiveIntensity={0.25} />
+                  </mesh>
+                  {/* Internal wires */}
+                  {[-0.1, 0, 0.1].map((x, i) => (
+                    <mesh key={i} position={[x, -0.05, 0]}>
+                      <cylinderGeometry args={[0.008, 0.008, 1.2, 8]} />
+                      <meshStandardMaterial color={["#ff6b6b", "#ffd93d", "#4ecdc4"][i]} emissive={["#ff6b6b", "#ffd93d", "#4ecdc4"][i]} emissiveIntensity={0.4} />
+                    </mesh>
+                  ))}
+                </>
+              )}
             </Float>
             <Environment preset="studio" />
           </Suspense>
