@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useMemo } from "react";
+import { Suspense, useEffect, useRef, useState, useMemo } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -266,11 +266,11 @@ export function AgriPen3D() {
   const [exploded, setExploded] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [xray, setXray] = useState(false);
 
-  // Client-only mount guard
-  if (typeof window !== "undefined" && !mounted) {
-    queueMicrotask(() => setMounted(true));
-  }
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const active = HOTSPOTS.find((h) => h.id === selected);
 
