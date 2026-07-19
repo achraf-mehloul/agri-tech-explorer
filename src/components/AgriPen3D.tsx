@@ -355,6 +355,16 @@ export function AgriPen3D() {
           </div>
           <div className="pointer-events-auto flex gap-2">
             <button
+              onClick={() => { setXray(!xray); setSelected(null); }}
+              className={`rounded-full border px-4 py-1.5 text-xs font-medium backdrop-blur transition ${
+                xray
+                  ? "border-accent/60 bg-accent/20 text-accent"
+                  : "border-border/60 bg-background/70 hover:bg-background"
+              }`}
+            >
+              {xray ? "X-Ray on" : "X-Ray"}
+            </button>
+            <button
               onClick={() => {
                 setExploded(!exploded);
                 setSelected(null);
@@ -367,6 +377,7 @@ export function AgriPen3D() {
               onClick={() => {
                 setSelected(null);
                 setExploded(false);
+                setXray(false);
               }}
               className="rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-xs font-medium backdrop-blur transition hover:bg-background"
             >
