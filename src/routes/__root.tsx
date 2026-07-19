@@ -84,8 +84,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "AgriPen — Understand your soil. Make better decisions." },
       { name: "twitter:description", content: "AgriPen is a precision soil-sensing instrument that combines embedded sensors, mobile software, and AI to support smarter agricultural decisions." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa6322bd-dda6-40bc-a0b2-70922fed0340/id-preview-02f61e58--d106711e-f52a-4a0b-97a4-b764a61c2f5a.lovable.app-1784328503344.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa6322bd-dda6-40bc-a0b2-70922fed0340/id-preview-02f61e58--d106711e-f52a-4a0b-97a4-b764a61c2f5a.lovable.app-1784328503344.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

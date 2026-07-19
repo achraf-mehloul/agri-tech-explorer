@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useMemo } from "react";
+import { Suspense, useEffect, useRef, useState, useMemo } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -52,10 +52,12 @@ const HOTSPOTS: Hotspot[] = [
 function PenModel({
   exploded,
   selected,
+  xray,
   onSelect,
 }: {
   exploded: boolean;
   selected: string | null;
+  xray: boolean;
   onSelect: (id: string | null) => void;
 }) {
   const group = useRef<THREE.Group>(null!);
@@ -67,7 +69,7 @@ function PenModel({
     }
   });
 
-  // Material palette
+  // Material palette — recomputed when xray toggles for transparency
   const bodyMat = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
@@ -76,8 +78,11 @@ function PenModel({
         metalness: 0.15,
         clearcoat: 0.6,
         clearcoatRoughness: 0.25,
+        transparent: xray,
+        opacity: xray ? 0.18 : 1,
+        depthWrite: !xray,
       }),
-    [],
+    [xray],
   );
   const capMat = useMemo(
     () =>
@@ -86,8 +91,11 @@ function PenModel({
         roughness: 0.4,
         metalness: 0.2,
         clearcoat: 0.5,
+        transparent: xray,
+        opacity: xray ? 0.25 : 1,
+        depthWrite: !xray,
       }),
-    [],
+    [xray],
   );
   const metalMat = useMemo(
     () =>
@@ -266,11 +274,11 @@ export function AgriPen3D() {
   const [exploded, setExploded] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [xray, setXray] = useState(false);
 
-  // Client-only mount guard
-  if (typeof window !== "undefined" && !mounted) {
-    queueMicrotask(() => setMounted(true));
-  }
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const active = HOTSPOTS.find((h) => h.id === selected);
 
@@ -295,7 +303,28 @@ export function AgriPen3D() {
           <directionalLight position={[-4, 2, -2]} intensity={0.4} color="#a8c49a" />
           <Suspense fallback={null}>
             <Float speed={0.8} rotationIntensity={0} floatIntensity={0.35}>
-              <PenModel exploded={exploded} selected={selected} onSelect={setSelected} />
+              <PenModel exploded={exploded} selected={selected} xray={xray} onSelect={setSelected} />
+              {xray && (
+                <>
+                  {/* Simulated PCB inside upper body */}
+                  <mesh position={[0, 0.7, 0]}>
+                    <boxGeometry args={[0.42, 0.9, 0.05]} />
+                    <meshStandardMaterial color="#0d5b3a" roughness={0.6} metalness={0.2} emissive="#0d5b3a" emissiveIntensity={0.15} />
+                  </mesh>
+                  {/* Battery cell inside lower body */}
+                  <mesh position={[0, -0.75, 0]}>
+                    <cylinderGeometry args={[0.18, 0.18, 1.15, 24]} />
+                    <meshStandardMaterial color="#7c4dff" roughness={0.5} metalness={0.6} emissive="#5a37c9" emissiveIntensity={0.25} />
+                  </mesh>
+                  {/* Internal wires */}
+                  {[-0.1, 0, 0.1].map((x, i) => (
+                    <mesh key={i} position={[x, -0.05, 0]}>
+                      <cylinderGeometry args={[0.008, 0.008, 1.2, 8]} />
+                      <meshStandardMaterial color={["#ff6b6b", "#ffd93d", "#4ecdc4"][i]} emissive={["#ff6b6b", "#ffd93d", "#4ecdc4"][i]} emissiveIntensity={0.4} />
+                    </mesh>
+                  ))}
+                </>
+              )}
             </Float>
             <Environment preset="studio" />
           </Suspense>
@@ -326,6 +355,16 @@ export function AgriPen3D() {
           </div>
           <div className="pointer-events-auto flex gap-2">
             <button
+              onClick={() => { setXray(!xray); setSelected(null); }}
+              className={`rounded-full border px-4 py-1.5 text-xs font-medium backdrop-blur transition ${
+                xray
+                  ? "border-accent/60 bg-accent/20 text-accent"
+                  : "border-border/60 bg-background/70 hover:bg-background"
+              }`}
+            >
+              {xray ? "X-Ray on" : "X-Ray"}
+            </button>
+            <button
               onClick={() => {
                 setExploded(!exploded);
                 setSelected(null);
@@ -338,6 +377,7 @@ export function AgriPen3D() {
               onClick={() => {
                 setSelected(null);
                 setExploded(false);
+                setXray(false);
               }}
               className="rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-xs font-medium backdrop-blur transition hover:bg-background"
             >
