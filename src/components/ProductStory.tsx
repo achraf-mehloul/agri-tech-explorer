@@ -295,8 +295,8 @@ function SceneCaptions({ p }: { p: MotionValue<number> }) {
 function Caption({ p, at, scene }: { p: MotionValue<number>; at: number; scene: (typeof SCENES)[number] }) {
   const opacity = useTransform(p, (v) => {
     const d = Math.abs(v - at);
-    if (d > 0.105) return 0;
-    return Math.max(0, 1 - d / 0.105);
+    if (d > 0.085) return 0;
+    return Math.max(0, 1 - d / 0.085);
   });
   const y = useTransform(p, (v) => (v - at) * 120);
 
