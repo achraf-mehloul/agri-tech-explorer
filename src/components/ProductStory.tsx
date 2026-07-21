@@ -102,8 +102,9 @@ export function ProductStory() {
 function DeviceStage({ p }: { p: MotionValue<number> }) {
   const y = useTransform(p, [0, 0.22, 0.38, 0.68, 1], ["-7%", "-4%", "17%", "17%", "2%"]);
   const x = useTransform(p, [0, 0.64, 0.78, 1], ["0%", "0%", "-26%", "-30%"]);
-  const rotateZ = useTransform(p, [0, 0.22, 0.38, 1], [-9, -4, 0, 0]);
-  const rotateY = useTransform(p, [0, 0.18, 0.34, 0.7, 1], [0, 28, -10, 8, -8]);
+  // Scroll-linked cinematic rotation: pen tilts, spins a full 360°, then settles
+  const rotateZ = useTransform(p, [0, 0.22, 0.38, 0.7, 1], [-18, -8, 0, 6, 0]);
+  const rotateY = useTransform(p, [0, 0.25, 0.5, 0.75, 1], [0, 180, 360, 540, 720]);
   const scale = useTransform(p, [0, 0.16, 0.62, 0.78, 1], [1.08, 1, 0.92, 0.72, 0.68]);
 
   return (
