@@ -112,6 +112,16 @@ function DeviceStage({ p }: { p: MotionValue<number> }) {
       className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
     >
       <div className="relative h-full max-h-[720px] min-h-[420px]">
+        {/* backlight halo so the pen never blends into the dark cinema bg */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-1/2 -z-10 h-[110%] w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse 40% 55% at 50% 50%, oklch(0.72 0.18 140 / 0.28), transparent 70%)",
+            filter: "blur(30px)",
+          }}
+        />
         <Pen />
       </div>
     </motion.div>
@@ -128,32 +138,32 @@ function Pen() {
     >
       <defs>
         <linearGradient id="storyBody" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#050806" />
-          <stop offset="0.18" stopColor="#182018" />
-          <stop offset="0.46" stopColor="#354333" />
-          <stop offset="0.58" stopColor="#73806f" />
-          <stop offset="0.72" stopColor="#202a20" />
-          <stop offset="1" stopColor="#030503" />
+          <stop offset="0" stopColor="#1b241b" />
+          <stop offset="0.2" stopColor="#33453a" />
+          <stop offset="0.5" stopColor="#8ea690" />
+          <stop offset="0.62" stopColor="#c9dccb" />
+          <stop offset="0.78" stopColor="#4a5c4d" />
+          <stop offset="1" stopColor="#141c14" />
         </linearGradient>
         <linearGradient id="storyCap" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#020302" />
-          <stop offset="0.48" stopColor="#20271f" />
-          <stop offset="1" stopColor="#050705" />
+          <stop offset="0" stopColor="#0f150f" />
+          <stop offset="0.5" stopColor="#3c4a3c" />
+          <stop offset="1" stopColor="#101610" />
         </linearGradient>
         <linearGradient id="storyMetal" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#727a73" />
-          <stop offset="0.35" stopColor="#f2f4ec" />
-          <stop offset="0.62" stopColor="#9fa79e" />
-          <stop offset="1" stopColor="#d8ddd4" />
+          <stop offset="0" stopColor="#8b938c" />
+          <stop offset="0.4" stopColor="#f6f8f0" />
+          <stop offset="0.65" stopColor="#b6bdb2" />
+          <stop offset="1" stopColor="#e3e8dc" />
         </linearGradient>
         <radialGradient id="storyLed" cx="50%" cy="45%" r="70%">
-          <stop offset="0" stopColor="#c9ff7a" />
-          <stop offset="0.55" stopColor="#7bc444" />
-          <stop offset="1" stopColor="#315d1f" />
+          <stop offset="0" stopColor="#e4ffb0" />
+          <stop offset="0.55" stopColor="#8ed94f" />
+          <stop offset="1" stopColor="#3a7622" />
         </radialGradient>
         <filter id="innerShadow">
-          <feDropShadow dx="-8" dy="0" stdDeviation="10" floodColor="#000" floodOpacity="0.35" />
-          <feDropShadow dx="7" dy="0" stdDeviation="7" floodColor="#d8f4c8" floodOpacity="0.08" />
+          <feDropShadow dx="-8" dy="0" stdDeviation="10" floodColor="#000" floodOpacity="0.5" />
+          <feDropShadow dx="7" dy="0" stdDeviation="7" floodColor="#e4ffc4" floodOpacity="0.14" />
         </filter>
       </defs>
 
