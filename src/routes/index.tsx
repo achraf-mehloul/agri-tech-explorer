@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppGallery } from "@/components/AppGallery";
 import { SensorShowcase } from "@/components/SensorShowcase";
 import { Ecosystem } from "@/components/Ecosystem";
-import { ProductStory } from "@/components/ProductStory";
+import { BottomNav } from "@/components/BottomNav";
 
 const AgriPen3D = lazy(() =>
   import("@/components/AgriPen3D").then((m) => ({ default: m.AgriPen3D })),
@@ -24,10 +24,9 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden pb-28">
       <Nav />
       <Hero />
-      <ProductStory />
       <Marquee />
       <Narrative />
       <SensorsSection />
@@ -42,101 +41,27 @@ function Home() {
       <TechStack />
       <CTA />
       <Footer />
+      <BottomNav />
     </main>
   );
 }
 
-/* ------------------------------- NAV ------------------------------- */
+/* ------------------------------- NAV (top glass pill) ------------------------------- */
 function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 20);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  const items = [
-    ["Device", "#device"],
-    ["Hardware", "#hardware"],
-    ["System", "#system"],
-    ["Software", "#software"],
-    ["Roadmap", "#roadmap"],
-  ] as const;
-
   return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border/60 bg-background/80 backdrop-blur-xl"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 md:px-6 md:py-4 max-w-7xl">
-        <a href="#top" className="flex min-w-0 items-center gap-2.5">
-          <img src={logoAsset.url} alt="AgriPen" className="h-8 w-8 shrink-0" />
-          <span className="font-display text-xl tracking-tight truncate">AgriPen</span>
+    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+      <div className="glass-strong pointer-events-auto flex w-full max-w-md items-center justify-between gap-3 rounded-full py-2 pl-3 pr-2">
+        <a href="#top" className="flex min-w-0 items-center gap-2">
+          <img src={logoAsset.url} alt="AgriPen" className="h-7 w-7 shrink-0" />
+          <span className="font-display text-base font-semibold tracking-tight truncate">AgriPen</span>
         </a>
-        <nav className="hidden lg:flex gap-8">
-          {items.map(([l, h]) => (
-            <a
-              key={l}
-              href={h}
-              className="text-sm text-muted-foreground transition hover:text-foreground"
-            >
-              {l}
-            </a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <a
-            href="#contact"
-            className="hidden sm:inline-flex rounded-full bg-foreground px-4 py-1.5 text-sm text-background transition hover:opacity-90"
-          >
-            Request access
-          </a>
-          <button
-            onClick={() => setOpen(!open)}
-            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface"
-            aria-label="Menu"
-          >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              {open ? <><path d="M6 6l12 12" /><path d="M18 6L6 18" /></> : <><path d="M4 7h16" /><path d="M4 12h16" /><path d="M4 17h16" /></>}
-            </svg>
-          </button>
-        </div>
+        <a
+          href="#contact"
+          className="rounded-full bg-primary px-4 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90"
+        >
+          Request access
+        </a>
       </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="lg:hidden fixed inset-x-0 top-[57px] bottom-0 bg-background/95 backdrop-blur-xl border-t border-border animate-fade-in">
-          <div className="flex flex-col p-6 gap-1">
-            {items.map(([l, h]) => (
-              <a
-                key={l}
-                href={h}
-                onClick={() => setOpen(false)}
-                className="text-2xl font-display py-3 border-b border-border"
-              >
-                {l}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
-              className="mt-6 rounded-full bg-foreground text-background text-center py-3 text-sm font-medium"
-            >
-              Request access
-            </a>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
