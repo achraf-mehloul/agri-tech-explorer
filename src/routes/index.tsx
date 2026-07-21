@@ -27,7 +27,7 @@ function Home() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Nav />
       <Hero />
-      <ProductStory />
+      <BottomNav />
       <Marquee />
       <Narrative />
       <SensorsSection />
