@@ -112,6 +112,16 @@ function DeviceStage({ p }: { p: MotionValue<number> }) {
       className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
     >
       <div className="relative h-full max-h-[720px] min-h-[420px]">
+        {/* backlight halo so the pen never blends into the dark cinema bg */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-1/2 -z-10 h-[110%] w-[240%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse 40% 55% at 50% 50%, oklch(0.72 0.18 140 / 0.28), transparent 70%)",
+            filter: "blur(30px)",
+          }}
+        />
         <Pen />
       </div>
     </motion.div>
