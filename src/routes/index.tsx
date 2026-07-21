@@ -24,10 +24,9 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden pb-28">
       <Nav />
       <Hero />
-      <BottomNav />
       <Marquee />
       <Narrative />
       <SensorsSection />
@@ -42,6 +41,7 @@ function Home() {
       <TechStack />
       <CTA />
       <Footer />
+      <BottomNav />
     </main>
   );
 }
