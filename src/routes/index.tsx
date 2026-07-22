@@ -594,6 +594,24 @@ function AIExperience() {
   );
 }
 
+/* ------------------------------- LIVE MEASUREMENTS (Spring Boot API) ------------------------------- */
+function LiveMeasurements() {
+  return (
+    <section id="measurements" className="py-24 md:py-32 px-4 md:px-6">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Field telemetry · Spring Boot API"
+          title="Live measurements from the device."
+          sub="Streamed over REST from the AgriPen backend. Auto-refreshing charts, connection status, and graceful loading and error states."
+        />
+        <div className="mt-10 md:mt-14">
+          <MeasurementsPanel />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------- LIVE DEMO ------------------------------- */
 function LiveDemo() {
   const [t, setT] = useState(0);
