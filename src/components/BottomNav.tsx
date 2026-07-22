@@ -70,12 +70,13 @@ export function BottomNav() {
     const y = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
     window.scrollTo({
       top: Math.max(0, y),
-      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      behavior: reducedMotion ? "auto" : "smooth",
     });
     // reflect in URL without jumping
     history.replaceState(null, "", href);
     setActive(href);
-  }, []);
+  }, [reducedMotion]);
+
 
   return (
     <nav
