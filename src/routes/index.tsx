@@ -36,8 +36,9 @@ function Home() {
       <CurrentVsFuture />
       <AppSection />
       <AIExperience />
+      <LiveMeasurements />
       <LiveDemo />
-      <Roadmap />
+
       <UseCases />
       <TechStack />
       <CTA />

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const items = [
   { label: "Home", href: "#top", icon: HomeIcon },
@@ -11,13 +12,11 @@ const items = [
 
 const NAV_OFFSET = 80; // px above the target so headings aren't hidden
 
-function prefersReducedMotion() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
 
 export function BottomNav() {
   const [active, setActive] = useState<string>("#top");
+  const reducedMotion = useReducedMotion();
+
 
   // Accurate scroll spy: pick the section whose top is closest above a fixed
   // reference line (works well on mobile where IntersectionObserver rootMargin
