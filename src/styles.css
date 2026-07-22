@@ -162,11 +162,12 @@
   --input: oklch(0.24 0.012 145);
   --ring: oklch(0.82 0.14 155);
 
-  --glass-bg: oklch(0.2 0.012 145 / 0.42);
+  --glass-bg: oklch(0.2 0.012 145 / 0.62);
   --glass-border: oklch(1 0 0 / 0.08);
   --glass-shadow: 0 8px 32px oklch(0 0 0 / 0.4),
     inset 0 1px 0 oklch(1 0 0 / 0.06);
-  --glass-nav-bg: oklch(0.14 0.01 145 / 0.55);
+  --glass-nav-bg: oklch(0.14 0.01 145 / 0.72);
+
 
   --gradient-hero: radial-gradient(
       ellipse 60% 50% at 15% 5%,
