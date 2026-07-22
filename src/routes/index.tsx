@@ -7,6 +7,7 @@ import { AppGallery } from "@/components/AppGallery";
 import { SensorShowcase } from "@/components/SensorShowcase";
 import { Ecosystem } from "@/components/Ecosystem";
 import { BottomNav } from "@/components/BottomNav";
+import { MeasurementsPanel } from "@/components/MeasurementsPanel";
 
 const AgriPen3D = lazy(() =>
   import("@/components/AgriPen3D").then((m) => ({ default: m.AgriPen3D })),
