@@ -204,6 +204,26 @@
     background: oklch(0.82 0.14 155 / 0.35);
     color: var(--color-foreground);
   }
+  /* Ensure anchor scrolls clear the fixed top nav + bottom nav */
+  section[id] {
+    scroll-margin-top: 88px;
+    scroll-margin-bottom: 96px;
+  }
+}
+
+/* ---------- Reduced motion: turn off cinematics, keep essentials ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @utility text-balance {
@@ -225,19 +245,30 @@
   background-size: 48px 48px;
 }
 
+/* Lighter, GPU-friendly glass: reduced blur, slightly more opaque bg so
+   the effect still reads without hammering the compositor on mobile. */
 @utility glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(140%);
   box-shadow: var(--glass-shadow);
 }
 
 @utility glass-strong {
   background: var(--glass-nav-bg);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(32px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(150%);
   box-shadow: var(--glass-shadow);
 }
+
+/* Fallback for browsers without backdrop-filter (older Firefox, low-end):
+   solid-enough surface so text remains legible. */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass, .glass-strong {
+    background: var(--color-surface-elevated);
+  }
+}
+
 
 @keyframes float-slow {
   0%, 100% { transform: translateY(0); }
