@@ -7,6 +7,7 @@ import { AppGallery } from "@/components/AppGallery";
 import { SensorShowcase } from "@/components/SensorShowcase";
 import { Ecosystem } from "@/components/Ecosystem";
 import { BottomNav } from "@/components/BottomNav";
+import { MeasurementsPanel } from "@/components/MeasurementsPanel";
 
 const AgriPen3D = lazy(() =>
   import("@/components/AgriPen3D").then((m) => ({ default: m.AgriPen3D })),
@@ -35,8 +36,9 @@ function Home() {
       <CurrentVsFuture />
       <AppSection />
       <AIExperience />
+      <LiveMeasurements />
       <LiveDemo />
-      <Roadmap />
+
       <UseCases />
       <TechStack />
       <CTA />
@@ -586,6 +588,24 @@ function AIExperience() {
               </p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- LIVE MEASUREMENTS (Spring Boot API) ------------------------------- */
+function LiveMeasurements() {
+  return (
+    <section id="measurements" className="py-24 md:py-32 px-4 md:px-6">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Field telemetry · Spring Boot API"
+          title="Live measurements from the device."
+          sub="Streamed over REST from the AgriPen backend. Auto-refreshing charts, connection status, and graceful loading and error states."
+        />
+        <div className="mt-10 md:mt-14">
+          <MeasurementsPanel />
         </div>
       </div>
     </section>
